@@ -1,6 +1,7 @@
 package com.hillaryhsmith.mini_min.mineral;
 
 import com.hillaryhsmith.mini_min.learner.Learner;
+import com.hillaryhsmith.mini_min.photo.Photo;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -23,6 +24,10 @@ public class Mineral {
 
     @ManyToMany(mappedBy = "learnedMinerals")
     Set<Learner> learnedBy;
+
+    @OneToMany(mappedBy = "mineral")
+    Set<Photo> photos;
+
     private Integer mindatId;
 
     private String name;
