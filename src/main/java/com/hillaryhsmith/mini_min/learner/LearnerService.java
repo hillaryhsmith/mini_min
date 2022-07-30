@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class LearnerService {
@@ -19,15 +16,19 @@ public class LearnerService {
     // learners know about minerals
     private final MineralService mineralService;
 
+    private final Random random;
+
     @Autowired
     public LearnerService(LearnerRepository learnerRepository, MineralService mineralService) {
         this.learnerRepository = learnerRepository;
         this.mineralService = mineralService;
+        this.random = new Random();
     }
 
     // Learner API Routes
 
     // POST
+    @Transactional
     public void registerNewLearner(Learner learner) {
         Optional<Learner> learnerByUsername = learnerRepository
                 .findLearnerByUsername(learner.getUsername());
@@ -54,6 +55,7 @@ public class LearnerService {
     }
 
     // DELETE
+    @Transactional
     public void deleteLearner(Integer learnerId){
         if (!learnerRepository.existsById(learnerId)){
             throw learnerNotFoundException(learnerId);
@@ -73,12 +75,25 @@ public class LearnerService {
     }
 
     // GET
+
     public Set<Mineral> getLearnedMinerals(Integer learnerId) {
         return getLearnerById(learnerId).learnedMinerals;
     }
 
     public List<Integer> getLearnedMineralIds(Integer learnerId) {
         return mineralSetToIdList(getLearnedMinerals(learnerId));
+    }
+
+    public Mineral getRandomLearnedMineral(Integer learnerId) {
+        Set<Mineral> mineralSet = getLearnedMinerals(learnerId);
+        return getRandomSetElement(mineralSet);
+    }
+
+    public Mineral getDifferentRandomLearnedMineral(Integer learnerId, Integer mineralId) {
+        // copy to avoid modifying the learnedMinerals attribute of the Learner
+        Set<Mineral> mineralSet = new HashSet<Mineral>(getLearnedMinerals(learnerId));
+        mineralSet.remove(mineralService.getMineralById(mineralId));
+        return getRandomSetElement(mineralSet);
     }
 
     public Set<Mineral> getUnlearnedMinerals(Integer learnerId) {
@@ -90,6 +105,11 @@ public class LearnerService {
 
     public List<Integer> getUnlearnedMineralIds(Integer learnerId) {
         return mineralSetToIdList(getUnlearnedMinerals(learnerId));
+    }
+
+    public Mineral getRandomUnlearnedMineral(Integer learnerId) {
+        Set<Mineral> mineralSet = getUnlearnedMinerals(learnerId);
+        return getRandomSetElement(mineralSet);
     }
 
     // DELETE
@@ -119,5 +139,24 @@ public class LearnerService {
         }
 
         return idList;
+    }
+
+    private Mineral getRandomSetElement(Set<Mineral> mineralSet) {
+        int setSize = mineralSet.size();
+        if (setSize == 0) {
+            throw new IllegalStateException("no minerals available");
+        }
+
+        int randomNumber = random.nextInt(setSize);
+        int index = 0;
+        for (Mineral mineral : mineralSet) {
+            if (index == randomNumber) {
+                return mineral;
+            }
+
+            index++;
+        }
+
+        throw new IllegalStateException("I thought this was unreachable");
     }
 }

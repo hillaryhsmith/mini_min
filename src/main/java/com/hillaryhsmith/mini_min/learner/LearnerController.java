@@ -74,6 +74,17 @@ public class LearnerController {
         return learnerService.getLearnedMineralIds(learnerId);
     }
 
+    @GetMapping(path="/learners/{learnerId}/randomLearnedMineral")
+    public Mineral getRandomLearnedMineral(@PathVariable("learnerId") Integer learnerId) {
+        return learnerService.getRandomLearnedMineral(learnerId);
+    }
+
+    @GetMapping(path="/learners/{learnerId}/{mineralId}/randomDifferentLearnedMineral")
+    public Mineral getDifferentRandomLearnedMineral(@PathVariable("learnerId") Integer learnerId,
+                                                    @PathVariable("mineralId") Integer mineralId) {
+        return learnerService.getDifferentRandomLearnedMineral(learnerId, mineralId);
+    }
+
     @GetMapping(path="/learners/{learnerId}/unlearnedMinerals")
     public Set<Mineral> getUnlearnedMinerals(@PathVariable("learnerId") Integer learnerId) {
         return learnerService.getUnlearnedMinerals(learnerId);
@@ -82,6 +93,11 @@ public class LearnerController {
     @GetMapping(path="/learners/{learnerId}/unlearnedMineralIds")
     public List<Integer> getUnlearnedMineralIds(@PathVariable("learnerId") Integer learnerId) {
         return learnerService.getUnlearnedMineralIds(learnerId);
+    }
+
+    @GetMapping(path="/learners/{learnerId}/randomUnlearnedMineral")
+    public Mineral getRandomUnlearnedMineral(@PathVariable("learnerId") Integer learnerId) {
+        return learnerService.getRandomUnlearnedMineral(learnerId);
     }
 
     @DeleteMapping(path="/learners/{learnerId}/{mineralId}/unlearnMineral")

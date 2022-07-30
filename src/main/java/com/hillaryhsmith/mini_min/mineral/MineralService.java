@@ -18,6 +18,7 @@ public class MineralService {
     public MineralService(MineralRepository mineralRepository) {this.mineralRepository = mineralRepository;}
 
     // POST
+    @Transactional
     public void addNewMineral(Mineral mineral) {
         Optional<Mineral> mineralByName = mineralRepository
                 .findMineralByName(mineral.getName());
@@ -63,6 +64,7 @@ public class MineralService {
     }
 
     // DELETE
+    @Transactional
     public void deleteMineral(Integer id){
         if (!mineralRepository.existsById(id)){
             throw mineralNotFoundException(id);
