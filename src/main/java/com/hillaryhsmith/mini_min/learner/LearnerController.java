@@ -23,28 +23,28 @@ public class LearnerController {
         return learnerService.getLearners();
     }
 
-    @PostMapping(path="learners")
+    @PostMapping(path="/learners")
     @ResponseBody
     public ResponseEntity registerNewLearner(@RequestBody Learner learner) {
         learnerService.registerNewLearner(learner);
         return new ResponseEntity<>("learner successfully registered", HttpStatus.CREATED);
     }
 
-    @PatchMapping(path="learners/{learnerId}/email")
+    @PatchMapping(path="/learners/{learnerId}/email")
     @ResponseBody
     public ResponseEntity updateLearnerEmail (@PathVariable("learnerId") Integer id, @RequestBody String newEmail) {
         learnerService.updateLearnerEmail(id, newEmail);
         return new ResponseEntity<>("email successfully updated", HttpStatus.OK);
     }
 
-    @PatchMapping(path="learners/{learnerId}/password")
+    @PatchMapping(path="/learners/{learnerId}/password")
     @ResponseBody
     public ResponseEntity updateLearnerPassword(@PathVariable("learnerId") Integer id, @RequestBody String newPassword) {
         learnerService.updateLearnerPassword(id, newPassword);
         return new ResponseEntity<>("password successfully updated", HttpStatus.OK);
     }
 
-    @DeleteMapping(path="learners/{learnerId}")
+    @DeleteMapping(path="/learners/{learnerId}")
     @ResponseBody
     public ResponseEntity deleteLearner(@PathVariable("learnerId") Integer id){
         learnerService.deleteLearner(id);
