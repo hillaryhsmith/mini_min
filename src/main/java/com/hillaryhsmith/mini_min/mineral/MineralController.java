@@ -34,32 +34,24 @@ public class MineralController {
         return mineralService.getMineralByName(name);
     }
 
-//
-//    @PostMapping(path="/minerals")
-//    @ResponseBody
-//    public ResponseEntity registerNewMineral(@RequestBody Mineral mineral) {
-//        learnerService.registerNewLearner(learner);
-//        return new ResponseEntity<>("learner successfully registered", HttpStatus.CREATED);
-//    }
-//
-//    @PatchMapping(path="learners/{learnerId}/email")
-//    @ResponseBody
-//    public ResponseEntity updateLearnerEmail (@PathVariable("learnerId") Integer id, @RequestBody String newEmail) {
-//        learnerService.updateLearnerEmail(id, newEmail);
-//        return new ResponseEntity<>("email successfully updated", HttpStatus.OK);
-//    }
-//
-//    @PatchMapping(path="learners/{learnerId}/password")
-//    @ResponseBody
-//    public ResponseEntity updateLearnerPassword(@PathVariable("learnerId") Integer id, @RequestBody String newPassword) {
-//        learnerService.updateLearnerPassword(id, newPassword);
-//        return new ResponseEntity<>("password successfully updated", HttpStatus.OK);
-//    }
-//
-//    @DeleteMapping(path="learners/{learnerId}")
-//    @ResponseBody
-//    public ResponseEntity deleteLearner(@PathVariable("learnerId") Integer id){
-//        learnerService.deleteLearner(id);
-//        return new ResponseEntity<>("learner successfully deleted", HttpStatus.OK);
-//    }
+    @PostMapping(path="/minerals")
+    @ResponseBody
+    public ResponseEntity addNewMineral(@RequestBody Mineral mineral) {
+        mineralService.addNewMineral(mineral);
+        return new ResponseEntity<>("mineral successfully added", HttpStatus.CREATED);
+    }
+
+    @PutMapping(path="minerals/{id}")
+    @ResponseBody
+    public ResponseEntity updateMineralEntry (@PathVariable("id") Integer id, @RequestBody Mineral mineralDetails) {
+        mineralService.updateMineralEntry(id, mineralDetails);
+        return new ResponseEntity<>("mineral entry successfully updated", HttpStatus.OK);
+    }
+
+    @DeleteMapping(path="minerals/{id}")
+    @ResponseBody
+    public ResponseEntity deleteMineral(@PathVariable("id") Integer id) {
+        mineralService.deleteMineral(id);
+        return new ResponseEntity<>("mineral successfully deleted", HttpStatus.OK);
+    }
 }

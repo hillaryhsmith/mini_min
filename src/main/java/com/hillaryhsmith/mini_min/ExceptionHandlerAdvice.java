@@ -1,6 +1,6 @@
 // Based on https://stackoverflow.com/questions/32441919/how-return-error-message-in-spring-mvc-controller
 
-package com.hillaryhsmith.mini_min.learner;
+package com.hillaryhsmith.mini_min;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

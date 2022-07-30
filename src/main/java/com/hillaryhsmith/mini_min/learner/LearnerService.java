@@ -28,7 +28,6 @@ public class LearnerService {
             throw new IllegalStateException("username is already in use");
         }
         learnerRepository.save(learner);
-        System.out.println(learner);
     }
 
    @Transactional
