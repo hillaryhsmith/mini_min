@@ -29,7 +29,7 @@ public class MineralController {
         return mineralService.getMineralById(id);
     }
 
-    @GetMapping(path="/minerals/{name}")
+    @GetMapping(path="/minerals/name/{name}")
     public Mineral getMineralByName(@PathVariable("name") String name) {
         return mineralService.getMineralByName(name);
     }
