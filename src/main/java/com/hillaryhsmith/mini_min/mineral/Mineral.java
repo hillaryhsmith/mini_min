@@ -1,6 +1,9 @@
 package com.hillaryhsmith.mini_min.mineral;
 
+import com.hillaryhsmith.mini_min.learner.Learner;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -18,6 +21,8 @@ public class Mineral {
     )
     private Integer id;
 
+    @ManyToMany(mappedBy = "learnedMinerals")
+    Set<Learner> learnedBy;
     private Integer mindatId;
 
     private String name;

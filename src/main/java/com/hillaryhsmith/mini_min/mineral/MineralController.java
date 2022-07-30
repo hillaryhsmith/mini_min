@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @RestController
@@ -19,8 +20,15 @@ public class MineralController {
         this.mineralService = mineralService;
     }
 
+    @PostMapping(path="/minerals")
+    @ResponseBody
+    public ResponseEntity addNewMineral(@RequestBody Mineral mineral) {
+        mineralService.addNewMineral(mineral);
+        return new ResponseEntity<>("mineral successfully added", HttpStatus.CREATED);
+    }
+
     @GetMapping(path="/minerals")
-    public List<Mineral> getMinerals() {
+    public Set<Mineral> getMinerals() {
         return mineralService.getMinerals();
     }
 
@@ -32,13 +40,6 @@ public class MineralController {
     @GetMapping(path="/minerals/name/{name}")
     public Mineral getMineralByName(@PathVariable("name") String name) {
         return mineralService.getMineralByName(name);
-    }
-
-    @PostMapping(path="/minerals")
-    @ResponseBody
-    public ResponseEntity addNewMineral(@RequestBody Mineral mineral) {
-        mineralService.addNewMineral(mineral);
-        return new ResponseEntity<>("mineral successfully added", HttpStatus.CREATED);
     }
 
     @PutMapping(path="minerals/{id}")

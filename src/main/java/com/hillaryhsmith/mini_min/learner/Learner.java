@@ -1,6 +1,9 @@
 package com.hillaryhsmith.mini_min.learner;
 
+import com.hillaryhsmith.mini_min.mineral.Mineral;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -16,6 +19,14 @@ public class Learner {
             generator = "learner_sequence"
     )
     private Integer id;
+
+    @ManyToMany
+    @JoinTable(
+        name="mineral_learner",
+        joinColumns = @JoinColumn(name = "learner_id"),
+        inverseJoinColumns = @JoinColumn(name = "mineral_id"))
+    Set<Mineral> learnedMinerals;
+
     private String username;
     private String password;
     private String email;

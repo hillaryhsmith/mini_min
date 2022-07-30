@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class MineralService {
@@ -16,8 +17,19 @@ public class MineralService {
     @Autowired
     public MineralService(MineralRepository mineralRepository) {this.mineralRepository = mineralRepository;}
 
-    public List<Mineral> getMinerals() {
-        return mineralRepository.findAll();
+    // POST
+    public void addNewMineral(Mineral mineral) {
+        Optional<Mineral> mineralByName = mineralRepository
+                .findMineralByName(mineral.getName());
+        if (mineralByName.isPresent()) {
+            throw new IllegalStateException("mineral is already in system");
+        }
+        mineralRepository.save(mineral);
+    }
+
+    // GET
+    public Set<Mineral> getMinerals() {
+        return mineralRepository.getAllMinerals();
     }
 
     public Mineral getMineralById(Integer id) {
@@ -30,15 +42,7 @@ public class MineralService {
                 .orElseThrow(() -> mineralNotFoundException(name));
     }
 
-    public void addNewMineral(Mineral mineral) {
-        Optional<Mineral> mineralByName = mineralRepository
-                .findMineralByName(mineral.getName());
-        if (mineralByName.isPresent()) {
-            throw new IllegalStateException("mineral is already in system");
-        }
-       mineralRepository.save(mineral);
-    }
-
+    // PUT
     @Transactional
     public void updateMineralEntry(Integer id, Mineral mineralDetails){
         Mineral updateMineral = mineralRepository.findById(id)
@@ -58,6 +62,7 @@ public class MineralService {
         mineralRepository.save(updateMineral);
     }
 
+    // DELETE
     public void deleteMineral(Integer id){
         if (!mineralRepository.existsById(id)){
             throw mineralNotFoundException(id);
@@ -65,6 +70,7 @@ public class MineralService {
         mineralRepository.deleteById(id);
     }
 
+    // Helper functions
     private IllegalStateException mineralNotFoundException(Integer id) {
         return new IllegalStateException("mineral with id "
                 + id + " does not exist");
