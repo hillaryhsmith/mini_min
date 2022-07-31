@@ -45,7 +45,7 @@ public class LearnerService {
         Learner learner = learnerRepository.findLearnerByUsername(username)
                 .orElseThrow(() -> invalidLogin());
 
-        if (password == learner.getPassword()) {
+        if (password.equals(learner.getPassword())) {
             return learner.getId();
         }
 

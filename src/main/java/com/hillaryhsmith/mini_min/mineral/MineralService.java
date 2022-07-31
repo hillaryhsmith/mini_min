@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -100,6 +101,18 @@ public class MineralService {
         return getMineralById(mineralId).getPhotos();
     }
 
+    public Photo getRandomPhoto(Integer mineralId) {
+        Set<Photo> photoSet = getPhotosForMineral(mineralId);
+        return getRandomSetElement(photoSet);
+    }
+
+    public Photo getDifferentRandomPhoto(Integer mineralId, Integer photoId) {
+        // copy to avoid modifying the photos attribute of the Mineral
+        Set<Photo> photoSet = new HashSet<Photo>(getPhotosForMineral(mineralId));
+        photoSet.remove(photoService.getPhotoById(photoId));
+        return getRandomSetElement(photoSet);
+    }
+
     // Helper Functions
     private IllegalStateException mineralNotFoundException(Integer mineralId) {
         return new IllegalStateException("mineral with id "
@@ -109,5 +122,24 @@ public class MineralService {
     private IllegalStateException mineralNotFoundException(String name) {
         return new IllegalStateException("mineral with name "
                 + name + " does not exist");
+    }
+
+    private Photo getRandomSetElement(Set<Photo> photoSet) {
+        int setSize = photoSet.size();
+        if (setSize == 0) {
+            throw new IllegalStateException("no minerals available");
+        }
+
+        int randomNumber = random.nextInt(setSize);
+        int index = 0;
+        for (Photo photo : photoSet) {
+            if (index == randomNumber) {
+                return photo;
+            }
+
+            index++;
+        }
+
+        throw new IllegalStateException("I thought this was unreachable");
     }
 }

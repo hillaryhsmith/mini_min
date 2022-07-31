@@ -72,5 +72,15 @@ public class MineralController {
         return mineralService.getPhotosForMineral(mineralId);
     }
 
+    @GetMapping(path="/minerals/{mineralId}/randomPhoto")
+    public Photo getRandomPhoto(@PathVariable("mineralId") Integer mineralId) {
+        return mineralService.getRandomPhoto(mineralId);
+    }
+
+    @GetMapping(path="/minerals/{mineralId}/{photoId}/randomDifferentPhoto")
+    public Photo getDifferentRandomPhoto(@PathVariable("mineralId") Integer mineralId,
+                                         @PathVariable("photoId") Integer photoId) {
+        return mineralService.getDifferentRandomPhoto(mineralId, photoId);
+    }
 
 }
