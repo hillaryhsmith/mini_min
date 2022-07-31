@@ -1,5 +1,6 @@
 package com.hillaryhsmith.mini_min.learner;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hillaryhsmith.mini_min.mineral.Mineral;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Learner {
     )
     private Integer id;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name="mineral_learner",
@@ -76,7 +78,11 @@ public class Learner {
         this.email = email;
     }
 
-//    To String
+    public Set<Mineral> getLearnedMinerals() {
+        return learnedMinerals;
+    }
+
+    //    To String
 
     @Override
     public String toString() {

@@ -63,7 +63,7 @@ public class LearnerService {
         learnerRepository.deleteById(learnerId);
     }
 
-    // mineral_learner API Routes
+    // Learner-Mineral API Routes
 
     // POST
     @Transactional
@@ -121,7 +121,7 @@ public class LearnerService {
         return learner.learnedMinerals.remove(mineral);
     }
 
-    // Helper functions
+    // Helper Functions
     private IllegalStateException learnerNotFoundException(Integer id) {
         return new IllegalStateException("learner with id "
                 + id + " does not exist");

@@ -1,12 +1,14 @@
 package com.hillaryhsmith.mini_min.mineral;
 
 import com.hillaryhsmith.mini_min.learner.Learner;
+import com.hillaryhsmith.mini_min.photo.Photo;
+import com.hillaryhsmith.mini_min.photo.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -14,8 +16,18 @@ public class MineralService {
 
     private final MineralRepository mineralRepository;
 
+    private final PhotoService photoService;
+
+    private final Random random;
+
     @Autowired
-    public MineralService(MineralRepository mineralRepository) {this.mineralRepository = mineralRepository;}
+    public MineralService(MineralRepository mineralRepository, PhotoService photoService) {
+        this.mineralRepository = mineralRepository;
+        this.photoService = photoService;
+        this.random = new Random();
+    }
+
+    // Mineral API Routes
 
     // POST
     @Transactional
@@ -33,9 +45,9 @@ public class MineralService {
         return mineralRepository.getAllMinerals();
     }
 
-    public Mineral getMineralById(Integer id) {
-        return mineralRepository.findById(id)
-                .orElseThrow(() -> mineralNotFoundException(id));
+    public Mineral getMineralById(Integer mineralId) {
+        return mineralRepository.findById(mineralId)
+                .orElseThrow(() -> mineralNotFoundException(mineralId));
     }
 
     public Mineral getMineralByName(String name) {
@@ -45,9 +57,9 @@ public class MineralService {
 
     // PUT
     @Transactional
-    public void updateMineralEntry(Integer id, Mineral mineralDetails){
-        Mineral updateMineral = mineralRepository.findById(id)
-                .orElseThrow(() -> mineralNotFoundException(id));
+    public void updateMineralEntry(Integer mineralId, Mineral mineralDetails) {
+        Mineral updateMineral = mineralRepository.findById(mineralId)
+                .orElseThrow(() -> mineralNotFoundException(mineralId));
         updateMineral.setColor(mineralDetails.getColor());
         updateMineral.setCrystalSystem(mineralDetails.getCrystalSystem());
         updateMineral.setDescription(mineralDetails.getDescription());
@@ -65,17 +77,33 @@ public class MineralService {
 
     // DELETE
     @Transactional
-    public void deleteMineral(Integer id){
-        if (!mineralRepository.existsById(id)){
-            throw mineralNotFoundException(id);
+    public void deleteMineral(Integer mineralId) {
+        Mineral mineral = getMineralById(mineralId);
+        for (Learner learner : mineral.getLearnedBy()) {
+            learner.getLearnedMinerals().remove(mineral);
         }
-        mineralRepository.deleteById(id);
+        mineralRepository.deleteById(mineralId);
     }
 
-    // Helper functions
-    private IllegalStateException mineralNotFoundException(Integer id) {
+    // Mineral-Photo API Routes
+
+    // POST
+    @Transactional
+    public void addPhotoForMineral(Integer mineralId, String photoLocation) {
+        Mineral mineral = getMineralById(mineralId);
+
+        photoService.addNewPhoto(mineral, photoLocation);
+    }
+
+    // GET
+    public Set<Photo> getPhotosForMineral(Integer mineralId) {
+        return getMineralById(mineralId).getPhotos();
+    }
+
+    // Helper Functions
+    private IllegalStateException mineralNotFoundException(Integer mineralId) {
         return new IllegalStateException("mineral with id "
-                + id + " does not exist");
+                + mineralId + " does not exist");
     }
 
     private IllegalStateException mineralNotFoundException(String name) {

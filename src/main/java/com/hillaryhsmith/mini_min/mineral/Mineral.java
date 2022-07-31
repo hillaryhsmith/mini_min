@@ -1,5 +1,6 @@
 package com.hillaryhsmith.mini_min.mineral;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hillaryhsmith.mini_min.learner.Learner;
 import com.hillaryhsmith.mini_min.photo.Photo;
 
@@ -22,10 +23,12 @@ public class Mineral {
     )
     private Integer id;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "learnedMinerals")
     Set<Learner> learnedBy;
 
-    @OneToMany(mappedBy = "mineral")
+    @JsonIgnore
+    @OneToMany(mappedBy = "mineral", orphanRemoval=true)
     Set<Photo> photos;
 
     private Integer mindatId;
@@ -71,7 +74,7 @@ public class Mineral {
         this.description = description;
     }
 
-//    Getters and Setters
+    // Getters and Setters
 
     public Integer getId() {
         return id;
@@ -169,6 +172,13 @@ public class Mineral {
         this.description = description;
     }
 
+    public Set<Learner> getLearnedBy() {
+        return learnedBy;
+    }
+
+    public Set<Photo> getPhotos() {
+        return photos;
+    }
 
 //    To String
 

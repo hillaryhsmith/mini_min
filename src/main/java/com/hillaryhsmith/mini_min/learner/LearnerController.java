@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +19,8 @@ public class LearnerController {
     public LearnerController(LearnerService learnerService) {
         this.learnerService = learnerService;
     }
+
+    // Learner API Routes
 
     @PostMapping(path="/learners")
     @ResponseBody
@@ -54,7 +55,7 @@ public class LearnerController {
         return new ResponseEntity<>("learner successfully deleted", HttpStatus.OK);
     }
 
-    // Routes for join table mineral_learner
+    // Learner-Mineral API Routes
 
     @PostMapping(path="/learners/{learnerId}/{mineralId}")
     @ResponseBody
