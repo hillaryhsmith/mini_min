@@ -135,19 +135,20 @@ public class LearnerService {
     }
 
     // Helper Functions
-    private IllegalStateException learnerNotFoundException(Integer id) {
+    private IllegalStateException learnerNotFoundException(Integer learnerId) {
         return new IllegalStateException("learner with id "
-                + id + " does not exist");
+                + learnerId + " does not exist");
     }
 
     private IllegalStateException invalidLogin() {
         return new IllegalStateException("Invalid credentials");
     }
 
-    private Learner getLearnerById(Integer id) {
-        return learnerRepository.findById(id)
-                .orElseThrow(() -> learnerNotFoundException(id));
+    private Learner getLearnerById(Integer learnerId) {
+        return learnerRepository.findById(learnerId)
+                .orElseThrow(() -> learnerNotFoundException(learnerId));
     }
+
     private List<Integer> mineralSetToIdList(Set<Mineral> minerals) {
         List<Integer> idList = new ArrayList<>();
 

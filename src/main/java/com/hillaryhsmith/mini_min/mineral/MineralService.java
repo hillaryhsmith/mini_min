@@ -114,6 +114,7 @@ public class MineralService {
     }
 
     // Helper Functions
+
     private IllegalStateException mineralNotFoundException(Integer mineralId) {
         return new IllegalStateException("mineral with id "
                 + mineralId + " does not exist");

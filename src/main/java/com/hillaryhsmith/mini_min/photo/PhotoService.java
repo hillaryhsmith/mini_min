@@ -46,6 +46,7 @@ public class PhotoService {
     }
 
     // Helper Functions
+
     private IllegalStateException photoNotFoundException(Integer photoId) {
         return new IllegalStateException("photo with id "
                 + photoId + " does not exist");
