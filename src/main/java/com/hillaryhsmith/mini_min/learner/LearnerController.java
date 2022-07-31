@@ -29,6 +29,11 @@ public class LearnerController {
         return new ResponseEntity<>("learner successfully registered", HttpStatus.CREATED);
     }
 
+    @GetMapping(path="/learners/{username}/{password}/login")
+    public Integer verifyLogin(@PathVariable("username") String username, @PathVariable("password") String password) {
+        return learnerService.verifyLogin(username, password);
+    }
+
     @GetMapping(path="/learners")
     public List<Learner> getLearners() {
         return learnerService.getLearners();
@@ -36,22 +41,22 @@ public class LearnerController {
 
     @PatchMapping(path="/learners/{learnerId}/email")
     @ResponseBody
-    public ResponseEntity updateLearnerEmail (@PathVariable("learnerId") Integer id, @RequestBody String newEmail) {
-        learnerService.updateLearnerEmail(id, newEmail);
+    public ResponseEntity updateLearnerEmail (@PathVariable("learnerId") Integer learnerId, @RequestBody String newEmail) {
+        learnerService.updateLearnerEmail(learnerId, newEmail);
         return new ResponseEntity<>("email successfully updated", HttpStatus.OK);
     }
 
     @PatchMapping(path="/learners/{learnerId}/password")
     @ResponseBody
-    public ResponseEntity updateLearnerPassword(@PathVariable("learnerId") Integer id, @RequestBody String newPassword) {
-        learnerService.updateLearnerPassword(id, newPassword);
+    public ResponseEntity updateLearnerPassword(@PathVariable("learnerId") Integer learnerId, @RequestBody String newPassword) {
+        learnerService.updateLearnerPassword(learnerId, newPassword);
         return new ResponseEntity<>("password successfully updated", HttpStatus.OK);
     }
 
     @DeleteMapping(path="/learners/{learnerId}")
     @ResponseBody
-    public ResponseEntity deleteLearner(@PathVariable("learnerId") Integer id){
-        learnerService.deleteLearner(id);
+    public ResponseEntity deleteLearner(@PathVariable("learnerId") Integer learnerId){
+        learnerService.deleteLearner(learnerId);
         return new ResponseEntity<>("learner successfully deleted", HttpStatus.OK);
     }
 

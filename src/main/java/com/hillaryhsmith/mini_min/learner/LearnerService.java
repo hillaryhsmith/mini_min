@@ -32,6 +32,7 @@ public class LearnerService {
     public void registerNewLearner(Learner learner) {
         Optional<Learner> learnerByUsername = learnerRepository
                 .findLearnerByUsername(learner.getUsername());
+
         if (learnerByUsername.isPresent()) {
             throw new IllegalStateException("username is already in use");
         }
@@ -39,6 +40,18 @@ public class LearnerService {
     }
 
     // GET
+
+    public Integer verifyLogin(String username, String password) {
+        Learner learner = learnerRepository.findLearnerByUsername(username)
+                .orElseThrow(() -> invalidLogin());
+
+        if (password == learner.getPassword()) {
+            return learner.getId();
+        }
+
+        throw invalidLogin();
+    }
+
     public List<Learner> getLearners() {
         return learnerRepository.findAll();
     }
@@ -125,6 +138,10 @@ public class LearnerService {
     private IllegalStateException learnerNotFoundException(Integer id) {
         return new IllegalStateException("learner with id "
                 + id + " does not exist");
+    }
+
+    private IllegalStateException invalidLogin() {
+        return new IllegalStateException("Invalid credentials");
     }
 
     private Learner getLearnerById(Integer id) {
