@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hillaryhsmith.mini_min.mineral.Mineral;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table
@@ -22,11 +21,10 @@ public class Photo {
     private Integer id;
 
     @JsonIgnore
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "mineral_id")
     Mineral mineral;
 
-    @NotNull
     private String location;
 
     protected Photo() {}
