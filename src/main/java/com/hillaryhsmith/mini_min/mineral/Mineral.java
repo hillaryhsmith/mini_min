@@ -45,6 +45,8 @@ public class Mineral {
 
     private String color;
 
+    private String streak;
+
     private String lustre;
 
     private String polymorphs;
@@ -140,6 +142,14 @@ public class Mineral {
         this.color = color;
     }
 
+    public String getStreak() {
+        return streak;
+    }
+
+    public void setStreak(String streak) {
+        this.streak = streak;
+    }
+
     public String getLustre() {
         return lustre;
     }
@@ -176,6 +186,14 @@ public class Mineral {
         return learnedBy;
     }
 
+    public void setLearnedBy(Set<Learner> learnedBy) {
+        this.learnedBy = learnedBy;
+    }
+
+    public void setPhotos(Set<Photo> photos) {
+        this.photos = photos;
+    }
+
     public Set<Photo> getPhotos() {
         return photos;
     }
@@ -186,6 +204,8 @@ public class Mineral {
     public String toString() {
         return "Mineral{" +
                 "id=" + id +
+                ", learnedBy=" + learnedBy +
+                ", photos=" + photos +
                 ", mindatId=" + mindatId +
                 ", name='" + name + '\'' +
                 ", formula='" + formula + '\'' +
@@ -193,6 +213,7 @@ public class Mineral {
                 ", hardness=" + hardness +
                 ", specificGravity='" + specificGravity + '\'' +
                 ", color='" + color + '\'' +
+                ", streak='" + streak + '\'' +
                 ", lustre='" + lustre + '\'' +
                 ", polymorphs='" + polymorphs + '\'' +
                 ", crystalSystem='" + crystalSystem + '\'' +
