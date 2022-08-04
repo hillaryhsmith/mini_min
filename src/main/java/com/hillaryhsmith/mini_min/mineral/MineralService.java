@@ -89,12 +89,6 @@ public class MineralService {
     // Mineral-Photo API Routes
 
     // POST
-    @Transactional
-    public void addPhotoForMineral(Integer mineralId, String photoLocation) {
-        Mineral mineral = getMineralById(mineralId);
-
-        photoService.addNewPhoto(mineral, photoLocation);
-    }
 
     @Transactional
     public void addPhotoForMineralByName(String mineralName, String photoLocation) {

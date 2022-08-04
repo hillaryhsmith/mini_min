@@ -59,13 +59,6 @@ public class MineralController {
 
     // Mineral-Photo API Routes
 
-    @PostMapping(path="/minerals/{mineralId}/photos")
-    @ResponseBody
-    public ResponseEntity addPhotoForMineral(@PathVariable("mineralId") Integer mineralId, @RequestBody String photoLocation) {
-        mineralService.addPhotoForMineral(mineralId, photoLocation);
-        return new ResponseEntity<>("photo successfully added for mineral", HttpStatus.CREATED);
-    }
-
     @PostMapping(path="/minerals/{mineralName}/photos")
     @ResponseBody
     public ResponseEntity addPhotoForMineralByName(@PathVariable("mineralName") String mineralName, @RequestBody String photoLocation) {
