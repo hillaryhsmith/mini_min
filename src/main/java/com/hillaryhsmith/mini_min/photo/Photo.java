@@ -25,6 +25,7 @@ public class Photo {
     @JoinColumn(name = "mineral_id")
     Mineral mineral;
 
+    @Column(length = 4096)
     private String location;
 
     protected Photo() {}

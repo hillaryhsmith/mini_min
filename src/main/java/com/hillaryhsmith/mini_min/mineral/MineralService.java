@@ -96,6 +96,13 @@ public class MineralService {
         photoService.addNewPhoto(mineral, photoLocation);
     }
 
+    @Transactional
+    public void addPhotoForMineralByName(String mineralName, String photoLocation) {
+        Mineral mineral = getMineralByName(mineralName);
+
+        photoService.addNewPhoto(mineral, photoLocation);
+    }
+
     // GET
     public Set<Photo> getPhotosForMineral(Integer mineralId) {
         return getMineralById(mineralId).getPhotos();

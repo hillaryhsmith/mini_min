@@ -39,7 +39,7 @@ public class Mineral {
 
     private String significance;
 
-    private Float hardness;
+    private String hardness;
 
     private String specificGravity;
 
@@ -53,16 +53,29 @@ public class Mineral {
 
     private String crystalSystem;
 
+    @Column(length = 4096)
+    private String crystalMorphology;
+
+    @Column(length = 4096)
     private String description;
 
     protected Mineral() {}
 
-//    Constructor
-    public Mineral(Integer id, Integer mindatId, String name,
-                   String formula, String significance, Float hardness,
-                   String specificGravity, String color, String lustre,
-                   String polymorphs, String crystalSystem, String description) {
+
+
+    //    Constructor
+
+    public Mineral(Integer id, Set<Learner> learnedBy,
+                   Set<Photo> photos, Integer mindatId,
+                   String name, String formula,
+                   String significance, String hardness,
+                   String specificGravity, String color,
+                   String streak, String lustre,
+                   String polymorphs, String crystalSystem,
+                   String crystalMorphology, String description) {
         this.id = id;
+        this.learnedBy = learnedBy;
+        this.photos = photos;
         this.mindatId = mindatId;
         this.name = name;
         this.formula = formula;
@@ -70,11 +83,14 @@ public class Mineral {
         this.hardness = hardness;
         this.specificGravity = specificGravity;
         this.color = color;
+        this.streak = streak;
         this.lustre = lustre;
         this.polymorphs = polymorphs;
         this.crystalSystem = crystalSystem;
+        this.crystalMorphology = crystalMorphology;
         this.description = description;
     }
+
 
     // Getters and Setters
 
@@ -118,11 +134,11 @@ public class Mineral {
         this.significance = significance;
     }
 
-    public Float getHardness() {
+    public String getHardness() {
         return hardness;
     }
 
-    public void setHardness(Float hardness) {
+    public void setHardness(String hardness) {
         this.hardness = hardness;
     }
 
@@ -174,6 +190,14 @@ public class Mineral {
         this.crystalSystem = crystalSystem;
     }
 
+    public String getCrystalMorphology() {
+        return crystalMorphology;
+    }
+
+    public void setCrystalMorphology(String crystalMorphology) {
+        this.crystalMorphology = crystalMorphology;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -217,6 +241,7 @@ public class Mineral {
                 ", lustre='" + lustre + '\'' +
                 ", polymorphs='" + polymorphs + '\'' +
                 ", crystalSystem='" + crystalSystem + '\'' +
+                ", crystalMorphology='" + crystalMorphology + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

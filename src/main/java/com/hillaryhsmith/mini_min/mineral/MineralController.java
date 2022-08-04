@@ -66,6 +66,13 @@ public class MineralController {
         return new ResponseEntity<>("photo successfully added for mineral", HttpStatus.CREATED);
     }
 
+    @PostMapping(path="/minerals/{mineralName}/photos")
+    @ResponseBody
+    public ResponseEntity addPhotoForMineralByName(@PathVariable("mineralName") String mineralName, @RequestBody String photoLocation) {
+        mineralService.addPhotoForMineralByName(mineralName, photoLocation);
+        return new ResponseEntity<>("photo successfully added for mineral", HttpStatus.CREATED);
+    }
+
     @GetMapping(path="/minerals/{mineralId}/photos")
     @ResponseBody
     public Set<Photo> getPhotosForMineral(@PathVariable("mineralId") Integer mineralId) {
