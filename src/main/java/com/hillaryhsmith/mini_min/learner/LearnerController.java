@@ -106,7 +106,7 @@ public class LearnerController {
         return learnerService.getRandomUnlearnedMineral(learnerId);
     }
 
-    @GetMapping(path="/learners/{learnerId}/{mineralId}/randomDifferentLearnedMineral")
+    @GetMapping(path="/learners/{learnerId}/{mineralId}/randomDifferentUnlearnedMineral")
     public Mineral getDifferentRandomUnearnedMineral(@PathVariable("learnerId") Integer learnerId,
                                                     @PathVariable("mineralId") Integer mineralId) {
         return learnerService.getDifferentRandomUnlearnedMineral(learnerId, mineralId);
