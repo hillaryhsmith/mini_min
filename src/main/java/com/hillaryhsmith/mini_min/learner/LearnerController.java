@@ -29,9 +29,9 @@ public class LearnerController {
         return new ResponseEntity<>("learner successfully registered", HttpStatus.CREATED);
     }
 
-    @GetMapping(path="/learners/{username}/{password}/login")
-    public Integer verifyLogin(@PathVariable("username") String username, @PathVariable("password") String password) {
-        return learnerService.verifyLogin(username, password);
+    @PostMapping(path="/learners/login")
+    public Integer verifyLogin(@RequestBody Learner learner) {
+        return learnerService.verifyLogin(learner.getUsername(), learner.getPassword());
     }
 
     @GetMapping(path="/learners")
@@ -104,6 +104,12 @@ public class LearnerController {
     @GetMapping(path="/learners/{learnerId}/randomUnlearnedMineral")
     public Mineral getRandomUnlearnedMineral(@PathVariable("learnerId") Integer learnerId) {
         return learnerService.getRandomUnlearnedMineral(learnerId);
+    }
+
+    @GetMapping(path="/learners/{learnerId}/{mineralId}/randomDifferentLearnedMineral")
+    public Mineral getDifferentRandomUnearnedMineral(@PathVariable("learnerId") Integer learnerId,
+                                                    @PathVariable("mineralId") Integer mineralId) {
+        return learnerService.getDifferentRandomUnlearnedMineral(learnerId, mineralId);
     }
 
     @DeleteMapping(path="/learners/{learnerId}/{mineralId}/unlearnMineral")

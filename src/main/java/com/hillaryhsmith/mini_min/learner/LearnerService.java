@@ -125,6 +125,13 @@ public class LearnerService {
         return getRandomSetElement(mineralSet);
     }
 
+    public Mineral getDifferentRandomUnlearnedMineral(Integer learnerId, Integer mineralId) {
+        // copy to avoid modifying the learnedMinerals attribute of the Learner
+        Set<Mineral> mineralSet = new HashSet<Mineral>(getUnlearnedMinerals(learnerId));
+        mineralSet.remove(mineralService.getMineralById(mineralId));
+        return getRandomSetElement(mineralSet);
+    }
+
     // DELETE
     @Transactional
     public boolean unlearnMineral(Integer learnerId, Integer mineralId){
